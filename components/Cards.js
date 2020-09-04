@@ -51,26 +51,27 @@ function createCard(articleObj){
     imageImg.src = articleObj.authorPhoto;
     authorSpan.textContent = `By ${articleObj.authorName}`;
 
-    return createCard
+    return mainCardDiv
 }
 
 //PART 2: SEND GET REQUEST AND DECONSTRUCT RETURNED DATA SO THAT createCard CAN HANDLE IT
 axios.get('https://lambda-times-api.herokuapp.com/articles')
-.then(stuff =>{
-    let dataObj = stuff.data;   //returned data is 3) article obj, 2) nested in topic array, 1) all nested in one large obj
-    let topicKeysArray = Object.keys(dataObj.articles); //creates an array of keys. each key unlocks articls objs
+    .then(stuff => {
+        let dataObj = stuff.data; //returned data is 3) article obj, 2) nested in topic array, 1) all nested in one large obj
+        let topicKeysArray = Object.keys(dataObj.articles); //creates an array of keys. each key unlocks topics array which contains article objs
 
-    topicKeysArray.forEach(item =>{                //forEach key ...
-        let arrayOfArticleObjs = dataObj.articles[`${item}`];   //... create an array of article objs
+        topicKeysArray.forEach(item => { //forEach key ...
+            let arrayOfArticleObjs = dataObj.articles[`${item}`]; //... create a topic array containing article objs
 
-        arrayOfArticleObjs.forEach(nestedItem =>{        //forEach article Obj ...
-            let newArticle = nestedItem;
-            console.log(newArticle);
-            // createCard(newArticle);                 //... pass to createCard to create new card
+            arrayOfArticleObjs.forEach(nestedItem => { //forEach article Obj ...
+                let newArticle = nestedItem;
+                let newCard = createCard(newArticle); //... pass it to createCard to create new card
 
+                let newCardPlacement = document.querySelector('.cards-container')   //above function returns the new cardDiv. this line selects where we want to place that new element
+                newCardPlacement.appendChild(newCard);  //then lastly append the new element.
+            })
         })
     })
-})
-.catch(err =>{
-    debugger
-})
+    .catch(err => {
+        debugger
+    })
