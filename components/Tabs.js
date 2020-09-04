@@ -10,11 +10,11 @@
 //
 // NOTE: you do _not_ need to install axios as it's included in the HTML via script element
 
-let topicContainer = document.querySelector('.topics');
+let topicContainer = document.querySelector('.topics'); //select piece of HTML where new topics will be appended to
 
 axios.get('https://lambda-times-api.herokuapp.com/topics')
     .then(stuff => {
-        let tempArray = Array.from(stuff.data.topics);
+        let tempArray = Array.from(stuff.data.topics);  //create an array from GET which already returned an array.
 
         tempArray.forEach(topic => {
             let newTopic = document.createElement('tab') //create new element. note in the HTML the top level element is tabs (plural) while this is singular

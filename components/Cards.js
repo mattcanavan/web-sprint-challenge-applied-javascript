@@ -20,3 +20,30 @@
 // Add a listener for click events so that when a user clicks on a card, the headline of the article is logged to the console.
 //
 // Use your function to create a card for each of the articles, and append each card to the DOM.
+
+
+function createCard(articleObj){
+    //Create all elements
+    const mainCardDiv = document.createElement('div'),
+        headlineDiv = document.createElement('div'),
+        authorDiv = document.createElement('div'),
+        imageDiv = document.createElement('div'),
+        imageImg = document.createElement('img'),
+        authorSpan = document.createElement('span');
+
+    //Add classnames to elements
+    mainCardDiv.classList.add('card');
+    headlineDiv.classList.add('headline');
+    authorDiv.classList.add('author');
+    imageDiv.classList.add('imge-container');
+
+    //Nesting elements to match provided markup
+    mainCardDiv.appendChild(headlineDiv);
+    mainCardDiv.appendChild(authorDiv);
+
+    authorDiv.appendChild(imageDiv);
+    authorDiv.appendChild(authorSpan);
+
+    imageDiv.appendChild(imageImg);
+
+}
