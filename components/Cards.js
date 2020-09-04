@@ -21,7 +21,7 @@
 //
 // Use your function to create a card for each of the articles, and append each card to the DOM.
 
-
+//PART 1: COMPONENET
 function createCard(articleObj){
     //Create all elements
     const mainCardDiv = document.createElement('div'),
@@ -46,4 +46,31 @@ function createCard(articleObj){
 
     imageDiv.appendChild(imageImg);
 
+    //Adding text contents, img src info
+    headlineDiv.textContent = articleObj.headline;
+    imageImg.src = articleObj.authorPhoto;
+    authorSpan.textContent = `By ${articleObj.authorName}`;
+
+    return createCard
 }
+
+//PART 2: SEND GET REQUEST AND DECONSTRUCT RETURNED DATA SO THAT createCard CAN HANDLE IT
+axios.get('https://lambda-times-api.herokuapp.com/articles')
+.then(stuff =>{
+    let dataObj = stuff.data;   //returned data is 3) article obj, 2) nested in topic array, 1) all nested in one large obj
+    let topicKeysArray = Object.keys(dataObj.articles); //creates an array of keys. each key unlocks articls objs
+
+    topicKeysArray.forEach(item =>{                //forEach key ...
+        let arrayOfArticleObjs = dataObj.articles[`${item}`];   //... create an array of article objs
+
+        arrayOfArticleObjs.forEach(nestedItem =>{        //forEach article Obj ...
+            let newArticle = nestedItem;
+            console.log(newArticle);
+            // createCard(newArticle);                 //... pass to createCard to create new card
+
+        })
+    })
+})
+.catch(err =>{
+    debugger
+})
