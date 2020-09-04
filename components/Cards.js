@@ -35,7 +35,7 @@ function createCard(articleObj){
     mainCardDiv.classList.add('card');
     headlineDiv.classList.add('headline');
     authorDiv.classList.add('author');
-    imageDiv.classList.add('imge-container');
+    imageDiv.classList.add('img-container');
 
     //Nesting elements to match provided markup
     mainCardDiv.appendChild(headlineDiv);
@@ -60,7 +60,7 @@ axios.get('https://lambda-times-api.herokuapp.com/articles')
         let dataObj = stuff.data; //returned data is 3) article obj, 2) nested in topic array, 1) all nested in one large obj
         let topicKeysArray = Object.keys(dataObj.articles); //creates an array of keys. each key unlocks topics array which contains article objs
 
-        topicKeysArray.forEach(item => { //forEach key ...
+        topicKeysArray.forEach(item => { //forEach topic key ...
             let arrayOfArticleObjs = dataObj.articles[`${item}`]; //... create a topic array containing article objs
 
             arrayOfArticleObjs.forEach(nestedItem => { //forEach article Obj ...
@@ -75,3 +75,10 @@ axios.get('https://lambda-times-api.herokuapp.com/articles')
     .catch(err => {
         debugger
     })
+
+//PART 3: ADD EVENT LISTENER
+const listenForClicks = document.addEventListener('click', event =>{
+     if (event.target.classList[0] === 'card'){ //event.target.classList returns DOMtokenArray
+         console.log(event.target.firstChild.textContent) //firstChild is headline
+     }
+})
